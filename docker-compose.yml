@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  # 1. Baza Danych
+  db:
+    image: postgres:16-alpine
+    container_name: ksef-db
+    environment:
+      - POSTGRES_DB=ksef_validator
+      - POSTGRES_USER=ksef_user
+      - POSTGRES_PASSWORD=ksef_password
+    ports:
+      - "5432:5432" # Dostępne też z Twojego komputera
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - ksef-network
+
+  # 2. Backend (Spring Boot)
+  backend:
+    build: ./backend
+    container_name: ksef-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/ksef_validator
+      - SPRING_DATASOURCE_USERNAME=ksef_user
+      - SPRING_DATASOURCE_PASSWORD=ksef_password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - db
+    networks:
+      - ksef-network
+
+  # 3. Frontend (React na Nginx)
+  frontend:
+    build: ./frontend
+    container_name: ksef-frontend
+    ports:
+      - "3000:80" # Aplikacja będzie dostępna pod localhost:3000
+    depends_on:
+      - backend
+    networks:
+      - ksef-network
+
+volumes:
+  postgres_data:
+
+networks:
+  ksef-network:
+    driver: bridge
