@@ -1,12 +1,31 @@
+
 import { KsefUploader } from './KsefUploader';
 import { ShieldCheck, Zap, Bot, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 export const LandingPage = () => {
   return (
-    <div className="min-h-screen bg-white selection:bg-violet-100 selection:text-violet-700 font-sans">
+    // ZMIANA 1: GŁÓWNY KONTENER
+    // Zamiast zwykłego bg-white, dodajemy styl inline z zaawansowanym gradientem (Mesh Gradient)
+    // Używamy kolorów slate-50 jako bazy, oraz bardzo subtelnych (opacity 0.1 - 0.15) odcieni niebieskiego i fioletu.
+    <div 
+      className="min-h-screen selection:bg-violet-100 selection:text-violet-700 font-sans"
+      style={{
+        backgroundColor: '#f8fafc', // Tailwind slate-50 base
+        backgroundImage: `
+          radial-gradient(at 0% 0%, hsla(217, 91%, 60%, 0.15) 0px, transparent 50%), 
+          radial-gradient(at 100% 0%, hsla(252, 100%, 67%, 0.15) 0px, transparent 50%), 
+          radial-gradient(at 50% 100%, hsla(217, 100%, 95%, 0.5) 0px, transparent 50%)
+        `
+        // Wyjaśnienie gradientów:
+        // 1. Lewy górny róg: Subtelny niebieski
+        // 2. Prawy górny róg: Subtelny fiolet
+        // 3. Dół środka: Rozjaśnienie (prawie biały)
+      }}
+    >
       
       {/* --- NAVBAR --- */}
-      <nav className="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
+      {/* Dodano backdrop-blur, żeby menu ładnie "mroziło" nowe tło */}
+      <nav className="fixed w-full z-50 bg-white/70 backdrop-blur-xl border-b border-slate-100/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-2">
@@ -30,19 +49,18 @@ export const LandingPage = () => {
       </nav>
 
       {/* --- HERO SECTION --- */}
-      <div className="relative pt-32 pb-20 sm:pt-40 sm:pb-24 overflow-hidden">
+      {/* Usunięto "overflow-hidden" bo nowe tło jest statyczne i nie wychodzi poza ramy */}
+      <div className="relative pt-32 pb-20 sm:pt-40 sm:pb-24">
         
-        {/* Dekoracyjne tło (Blobs) */}
-        <div className="absolute top-0 left-1/2 w-full -translate-x-1/2 h-full z-0 pointer-events-none">
-          <div className="absolute top-20 left-10 w-[500px] h-[500px] bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
-          <div className="absolute top-20 right-10 w-[500px] h-[500px] bg-violet-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
-          <div className="absolute -bottom-32 left-1/2 w-[500px] h-[500px] bg-purple-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
-        </div>
+        {/* ZMIANA 2: USUNIĘTO STARE TŁO (ANIMOWANE KULKI)
+            Cały blok div className="absolute top-0..." z animate-blob został usunięty.
+            Nowe tło jest teraz na głównym rodzicu (najwyższy div).
+        */}
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-sm font-semibold mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50/80 border border-blue-100/50 text-blue-600 text-sm font-semibold mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700 backdrop-blur-sm">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
@@ -77,7 +95,8 @@ export const LandingPage = () => {
       </div>
 
       {/* --- FEATURES SECTION --- */}
-      <div id="features" className="py-24 bg-slate-50 relative border-t border-slate-200">
+      {/* Zmieniono tło na transparentne, żeby gradient z góry przenikał, i dodano border */}
+      <div id="features" className="py-24 bg-transparent relative border-t border-slate-200/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-slate-900">Dlaczego zwykły ERP to za mało?</h2>
@@ -86,7 +105,8 @@ export const LandingPage = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Feature 1 */}
-            <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+            {/* Dodano backdrop-blur do kart, żeby ładnie wyglądały na nowym tle */}
+            <div className="bg-white/60 backdrop-blur-lg p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-all">
               <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6">
                 <Bot size={24} />
               </div>
@@ -97,7 +117,7 @@ export const LandingPage = () => {
             </div>
 
             {/* Feature 2 */}
-            <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+            <div className="bg-white/60 backdrop-blur-lg p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-all">
               <div className="w-12 h-12 bg-violet-100 text-violet-600 rounded-xl flex items-center justify-center mb-6">
                 <ShieldCheck size={24} />
               </div>
@@ -108,7 +128,7 @@ export const LandingPage = () => {
             </div>
 
             {/* Feature 3 */}
-            <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+            <div className="bg-white/60 backdrop-blur-lg p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-all">
               <div className="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center mb-6">
                 <Zap size={24} />
               </div>
@@ -124,7 +144,8 @@ export const LandingPage = () => {
       {/* --- CTA SECTION --- */}
       <div className="py-20">
         <div className="max-w-5xl mx-auto px-4 text-center">
-          <div className="bg-gradient-to-r from-blue-600 to-violet-600 rounded-3xl p-12 md:p-20 text-white shadow-2xl">
+          {/* Zwiększono cienie i dodano delikatny border */}
+          <div className="bg-gradient-to-r from-blue-600 to-violet-600 rounded-3xl p-12 md:p-20 text-white shadow-2xl shadow-blue-900/20 border border-white/10">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">Przestań martwić się korektami</h2>
             <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
               Dołącz do firm, które śpią spokojnie. Sprawdź swoje pierwsze 10 faktur za darmo.
@@ -137,9 +158,10 @@ export const LandingPage = () => {
       </div>
 
       {/* --- FOOTER --- */}
-      <footer className="bg-white border-t border-slate-100 py-12">
+      {/* Zmiana tła na transparentne */}
+      <footer className="bg-transparent border-t border-slate-200/60 py-12">
         <div className="max-w-7xl mx-auto px-4 text-center text-slate-400 text-sm">
-          <p>&copy; 2025 KSeF Validator AI. Wszelkie prawa zastrzeżone.</p>
+          <p>&copy; 2025 KSeF Validator AI KMB SoftDev. Wszelkie prawa zastrzeżone.</p>
           <div className="flex justify-center gap-6 mt-4">
             <a href="#" className="hover:text-slate-600">Polityka Prywatności</a>
             <a href="#" className="hover:text-slate-600">Regulamin</a>
