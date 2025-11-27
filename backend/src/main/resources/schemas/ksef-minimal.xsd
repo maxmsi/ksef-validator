@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           targetNamespace="http://crd.gov.pl/wzor/2023/06/29/12648/"
-           xmlns="http://crd.gov.pl/wzor/2023/06/29/12648/"
+           targetNamespace="http://crd.gov.pl/wzor/2025/06/25/13775/"
+           xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/"
            elementFormDefault="qualified">
 
     <xs:element name="Faktura">
@@ -22,6 +22,7 @@
                             </xs:element>
                             <xs:element name="WariantFormularza" type="xs:int"/>
                             <xs:element name="DataWytworzeniaFa" type="xs:dateTime"/>
+                            <xs:element name="SystemInfo" type="xs:string" minOccurs="0"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -29,27 +30,15 @@
                 <xs:element name="Podmiot1">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="DaneIdentyfikacyjne">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="NIP" type="TNrNIP"/>
-                                        <xs:element name="Nazwa" type="xs:string" minOccurs="0"/>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
+                            <xs:any minOccurs="0" maxOccurs="unbounded" processContents="skip"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
 
                 <xs:any minOccurs="0" maxOccurs="unbounded" processContents="skip"/>
+
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-
-    <xs:simpleType name="TNrNIP">
-        <xs:restriction base="xs:string">
-            <xs:pattern value="[1-9]((\d[1-9])|([1-9]\d))\d{7}"/>
-        </xs:restriction>
-    </xs:simpleType>
 
 </xs:schema>
